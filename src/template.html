@@ -10,6 +10,17 @@
       <form action="" id="weather-form">
         <input type="text" id="search" placeholder="Enter a city" />
         <input type="submit" id="button" value="Search" />
+        <label for="toggle">Select Units:</label>
+        <label for="fahrenheit">F</label>
+        <input
+          type="radio"
+          id="fahrenheit"
+          name="unitType"
+          value="us"
+          checked
+        />
+        <label for="celsius">C</label>
+        <input type="radio" id="celsius" name="unitType" value="metric" />
       </form>
       <div class="forecast">
         <!-- DOM content -->

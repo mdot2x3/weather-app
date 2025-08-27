@@ -2,11 +2,11 @@
 import "./style.css";
 
 // function to call API
-async function apiCall(userInput) {
+async function apiCall(userInput, degreeUnit) {
   try {
     const response = await fetch(
       // note: pushing the API key to the frontend is not good practice, this is a free key so it is being ignored in this instance for the sake of this practice project
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${userInput}?unitGroup=us&key=3G5NDYNJQFMLMP484EK9RSVAJ&contentType=json`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${userInput}?unitGroup=${degreeUnit}&key=3G5NDYNJQFMLMP484EK9RSVAJ&contentType=json`,
       { mode: "cors" },
     );
     const responseData = await response.json();
@@ -62,6 +62,11 @@ function processData(data) {
 const form = document.querySelector("#weather-form");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  // get radio button selection
+  const checked = document.querySelector(
+    'input[name="unitType"]:checked',
+  ).value;
+  // get input field value
   const input = document.querySelector("#search").value;
-  apiCall(input);
+  apiCall(input, checked);
 });

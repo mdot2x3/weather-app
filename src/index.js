@@ -3,7 +3,14 @@ import "./style.css";
 
 // function to call API
 async function apiCall(userInput, degreeUnit) {
+  const loading = document.querySelector(".loading");
+  const forecast = document.querySelector(".forecast");
   try {
+    // show loading indicator
+    loading.style.display = "block";
+    // clear previous forecast, if existing
+    forecast.innerHTML = "";
+
     const response = await fetch(
       // note: pushing the API key to the frontend is not good practice, this is a free key so it is being ignored in this instance for the sake of this practice project
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${userInput}?unitGroup=${degreeUnit}&key=3G5NDYNJQFMLMP484EK9RSVAJ&contentType=json`,
@@ -23,82 +30,84 @@ async function apiCall(userInput, degreeUnit) {
     const day5Icon = await getIcon(finalData.forecastDay5.icon);
 
     // display content on the page via the DOM
-    const forecast = document.querySelector(".forecast");
-
     forecast.innerHTML = `
-  <div class="current">
-    <p>Today, the forecast for <b>${finalData.address}</b> is ...</p>
-    <div class="icon-label">
-      <p>${finalData.currentConditions.temp}&deg</p>
-      <img src="${currentIcon}" alt="${finalData.currentConditions.icon}">
-      <span class="condition-label">${finalData.currentConditions.conditions}</span>
+    <div class="current">
+        <p>Today, the forecast for <b>${finalData.address}</b> is ...</p>
+        <div class="icon-label">
+        <p>${finalData.currentConditions.temp}&deg</p>
+        <img src="${currentIcon}" alt="${finalData.currentConditions.icon}">
+        <span class="condition-label">${finalData.currentConditions.conditions}</span>
+        </div>
+        <p>${finalData.currentDescription}</p>
     </div>
-    <p>${finalData.currentDescription}</p>
-  </div>
-  <div class="future">
-    <table>
-      <thead>
-        <tr>
-          <th>${finalData.forecastDay1.datetime}</th>
-          <th>${finalData.forecastDay2.datetime}</th>
-          <th>${finalData.forecastDay3.datetime}</th>
-          <th>${finalData.forecastDay4.datetime}</th>
-          <th>${finalData.forecastDay5.datetime}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="temp-label">${finalData.forecastDay1.temp}&deg</div>
-            <div class="icon-label">
-              <img src="${day1Icon}" alt="${finalData.forecastDay1.icon}">
-              <span class="condition-label">${finalData.forecastDay1.conditions}</span>
-            </div>
-          </td>
-          <td>
-            <div class="temp-label">${finalData.forecastDay2.temp}&deg</div>
-            <div class="icon-label">
-              <img src="${day2Icon}" alt="${finalData.forecastDay2.icon}">
-              <span class="condition-label">${finalData.forecastDay2.conditions}</span>
-            </div>
-          </td>
-          <td>
-            <div class="temp-label">${finalData.forecastDay3.temp}&deg</div>
-            <div class="icon-label">
-              <img src="${day3Icon}" alt="${finalData.forecastDay3.icon}">
-              <span class="condition-label">${finalData.forecastDay3.conditions}</span>
-            </div>
-          </td>
-          <td>
-            <div class="temp-label">${finalData.forecastDay4.temp}&deg</div>
-            <div class="icon-label">
-              <img src="${day4Icon}" alt="${finalData.forecastDay4.icon}">
-              <span class="condition-label">${finalData.forecastDay4.conditions}</span>
-            </div>
-          </td>
-          <td>
-            <div class="temp-label">${finalData.forecastDay5.temp}&deg</div>
-            <div class="icon-label">
-              <img src="${day5Icon}" alt="${finalData.forecastDay5.icon}">
-              <span class="condition-label">${finalData.forecastDay5.conditions}</span>
-            </div>
-          </td>
-        </tr>
-        <tr class="description-row">
-          <td>${finalData.forecastDay1.description}</td>
-          <td>${finalData.forecastDay2.description}</td>
-          <td>${finalData.forecastDay3.description}</td>
-          <td>${finalData.forecastDay4.description}</td>
-          <td>${finalData.forecastDay5.description}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-`;
+    <div class="future">
+        <table>
+        <thead>
+            <tr>
+            <th>${finalData.forecastDay1.datetime}</th>
+            <th>${finalData.forecastDay2.datetime}</th>
+            <th>${finalData.forecastDay3.datetime}</th>
+            <th>${finalData.forecastDay4.datetime}</th>
+            <th>${finalData.forecastDay5.datetime}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>
+                <div class="temp-label">${finalData.forecastDay1.temp}&deg</div>
+                <div class="icon-label">
+                <img src="${day1Icon}" alt="${finalData.forecastDay1.icon}">
+                <span class="condition-label">${finalData.forecastDay1.conditions}</span>
+                </div>
+            </td>
+            <td>
+                <div class="temp-label">${finalData.forecastDay2.temp}&deg</div>
+                <div class="icon-label">
+                <img src="${day2Icon}" alt="${finalData.forecastDay2.icon}">
+                <span class="condition-label">${finalData.forecastDay2.conditions}</span>
+                </div>
+            </td>
+            <td>
+                <div class="temp-label">${finalData.forecastDay3.temp}&deg</div>
+                <div class="icon-label">
+                <img src="${day3Icon}" alt="${finalData.forecastDay3.icon}">
+                <span class="condition-label">${finalData.forecastDay3.conditions}</span>
+                </div>
+            </td>
+            <td>
+                <div class="temp-label">${finalData.forecastDay4.temp}&deg</div>
+                <div class="icon-label">
+                <img src="${day4Icon}" alt="${finalData.forecastDay4.icon}">
+                <span class="condition-label">${finalData.forecastDay4.conditions}</span>
+                </div>
+            </td>
+            <td>
+                <div class="temp-label">${finalData.forecastDay5.temp}&deg</div>
+                <div class="icon-label">
+                <img src="${day5Icon}" alt="${finalData.forecastDay5.icon}">
+                <span class="condition-label">${finalData.forecastDay5.conditions}</span>
+                </div>
+            </td>
+            </tr>
+            <tr class="description-row">
+            <td>${finalData.forecastDay1.description}</td>
+            <td>${finalData.forecastDay2.description}</td>
+            <td>${finalData.forecastDay3.description}</td>
+            <td>${finalData.forecastDay4.description}</td>
+            <td>${finalData.forecastDay5.description}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    `;
   } catch {
     (error) => {
+      forecast.innerHTML = "<p>Failed to load weather data.</p>";
       console.log(error);
     };
+  } finally {
+    // hide loading indicator after everything is rendered
+    loading.style.display = "none";
   }
 }
 

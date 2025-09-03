@@ -23,6 +23,13 @@ form {
   margin-right: 4px;
 }
 
+/* layout for loading text */
+.loading {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 1.4em;
+}
+
 .current {
   text-align: center;
   margin: 20px;

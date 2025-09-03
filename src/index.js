@@ -14,14 +14,22 @@ async function apiCall(userInput, degreeUnit) {
     // view JSON object in console
     console.log(finalData);
 
+    // dynamically import icons
+    const currentIcon = await getIcon(finalData.currentConditions.icon);
+    const day1Icon = await getIcon(finalData.forecastDay1.icon);
+    const day2Icon = await getIcon(finalData.forecastDay2.icon);
+    const day3Icon = await getIcon(finalData.forecastDay3.icon);
+    const day4Icon = await getIcon(finalData.forecastDay4.icon);
+    const day5Icon = await getIcon(finalData.forecastDay5.icon);
+
     // display content on the page via the DOM
     const forecast = document.querySelector(".forecast");
 
     forecast.innerHTML = `
     <div class="current">
         <p>"Today, the forecast for ${finalData.address} is ..."</p>
-        <p>${finalData.currentConditions.icon}</p>
         <p>${finalData.currentConditions.temp}&deg</p>
+        <img src=${currentIcon} alt="${finalData.currentConditions.icon}">
         <p>${finalData.currentConditions.conditions}</p>
         <p>${finalData.currentDescription}</p>
     </div>
@@ -39,11 +47,18 @@ async function apiCall(userInput, degreeUnit) {
             </thead>
             <tbody>
                 <tr>
-                    <td>${finalData.forecastDay1.icon}</td>
-                    <td>${finalData.forecastDay2.icon}</td>
-                    <td>${finalData.forecastDay3.icon}</td>
-                    <td>${finalData.forecastDay4.icon}</td>
-                    <td>${finalData.forecastDay5.icon}</td>
+                    <td>${finalData.forecastDay1.temp}&deg</td>
+                    <td>${finalData.forecastDay2.temp}&deg</td>
+                    <td>${finalData.forecastDay3.temp}&deg</td>
+                    <td>${finalData.forecastDay4.temp}&deg</td>
+                    <td>${finalData.forecastDay5.temp}&deg</td>
+                </tr>
+                <tr>
+                    <td><img src="${day1Icon}" alt="${finalData.forecastDay1.icon}"></td>
+                    <td><img src="${day2Icon}" alt="${finalData.forecastDay2.icon}"></td>
+                    <td><img src="${day3Icon}" alt="${finalData.forecastDay3.icon}"></td>
+                    <td><img src="${day4Icon}" alt="${finalData.forecastDay4.icon}"></td>
+                    <td><img src="${day5Icon}" alt="${finalData.forecastDay5.icon}"></td>
                 </tr>
                 <tr>
                     <td>${finalData.forecastDay1.conditions}</td>
@@ -51,13 +66,6 @@ async function apiCall(userInput, degreeUnit) {
                     <td>${finalData.forecastDay3.conditions}</td>
                     <td>${finalData.forecastDay4.conditions}</td>
                     <td>${finalData.forecastDay5.conditions}</td>
-                </tr>
-                <tr>
-                    <td>${finalData.forecastDay1.temp}&deg</td>
-                    <td>${finalData.forecastDay2.temp}&deg</td>
-                    <td>${finalData.forecastDay3.temp}&deg</td>
-                    <td>${finalData.forecastDay4.temp}&deg</td>
-                    <td>${finalData.forecastDay5.temp}&deg</td>
                 </tr>
                 <tr>
                     <td>${finalData.forecastDay1.description}</td>
@@ -126,6 +134,15 @@ function processData(data) {
       description: data.days[5].description,
     },
   };
+}
+
+// function to dynamically import icons based on name
+async function getIcon(iconName) {
+  // webpack bundles all SVGs so they’re available at runtime
+  return import(
+    /* webpackMode: "eager" */
+    `./assets/vc_icons/${iconName}.svg`
+  ).then((module) => module.default);
 }
 
 // handle form submission

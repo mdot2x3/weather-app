@@ -26,57 +26,74 @@ async function apiCall(userInput, degreeUnit) {
     const forecast = document.querySelector(".forecast");
 
     forecast.innerHTML = `
-    <div class="current">
-        <p>"Today, the forecast for ${finalData.address} is ..."</p>
-        <p>${finalData.currentConditions.temp}&deg</p>
-        <img src=${currentIcon} alt="${finalData.currentConditions.icon}">
-        <p>${finalData.currentConditions.conditions}</p>
-        <p>${finalData.currentDescription}</p>
+  <div class="current">
+    <p>Today, the forecast for <b>${finalData.address}</b> is ...</p>
+    <div class="icon-label">
+      <p>${finalData.currentConditions.temp}&deg</p>
+      <img src="${currentIcon}" alt="${finalData.currentConditions.icon}">
+      <span class="condition-label">${finalData.currentConditions.conditions}</span>
     </div>
-    
-    <div class="future">
-        <table>
-            <thead>
-                <tr>
-                    <th>${finalData.forecastDay1.datetime}</th>
-                    <th>${finalData.forecastDay2.datetime}</th>
-                    <th>${finalData.forecastDay3.datetime}</th>
-                    <th>${finalData.forecastDay4.datetime}</th>
-                    <th>${finalData.forecastDay5.datetime}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>${finalData.forecastDay1.temp}&deg</td>
-                    <td>${finalData.forecastDay2.temp}&deg</td>
-                    <td>${finalData.forecastDay3.temp}&deg</td>
-                    <td>${finalData.forecastDay4.temp}&deg</td>
-                    <td>${finalData.forecastDay5.temp}&deg</td>
-                </tr>
-                <tr>
-                    <td><img src="${day1Icon}" alt="${finalData.forecastDay1.icon}"></td>
-                    <td><img src="${day2Icon}" alt="${finalData.forecastDay2.icon}"></td>
-                    <td><img src="${day3Icon}" alt="${finalData.forecastDay3.icon}"></td>
-                    <td><img src="${day4Icon}" alt="${finalData.forecastDay4.icon}"></td>
-                    <td><img src="${day5Icon}" alt="${finalData.forecastDay5.icon}"></td>
-                </tr>
-                <tr>
-                    <td>${finalData.forecastDay1.conditions}</td>
-                    <td>${finalData.forecastDay2.conditions}</td>
-                    <td>${finalData.forecastDay3.conditions}</td>
-                    <td>${finalData.forecastDay4.conditions}</td>
-                    <td>${finalData.forecastDay5.conditions}</td>
-                </tr>
-                <tr>
-                    <td>${finalData.forecastDay1.description}</td>
-                    <td>${finalData.forecastDay2.description}</td>
-                    <td>${finalData.forecastDay3.description}</td>
-                    <td>${finalData.forecastDay4.description}</td>
-                    <td>${finalData.forecastDay5.description}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <p>${finalData.currentDescription}</p>
+  </div>
+  <div class="future">
+    <table>
+      <thead>
+        <tr>
+          <th>${finalData.forecastDay1.datetime}</th>
+          <th>${finalData.forecastDay2.datetime}</th>
+          <th>${finalData.forecastDay3.datetime}</th>
+          <th>${finalData.forecastDay4.datetime}</th>
+          <th>${finalData.forecastDay5.datetime}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="temp-label">${finalData.forecastDay1.temp}&deg</div>
+            <div class="icon-label">
+              <img src="${day1Icon}" alt="${finalData.forecastDay1.icon}">
+              <span class="condition-label">${finalData.forecastDay1.conditions}</span>
+            </div>
+          </td>
+          <td>
+            <div class="temp-label">${finalData.forecastDay2.temp}&deg</div>
+            <div class="icon-label">
+              <img src="${day2Icon}" alt="${finalData.forecastDay2.icon}">
+              <span class="condition-label">${finalData.forecastDay2.conditions}</span>
+            </div>
+          </td>
+          <td>
+            <div class="temp-label">${finalData.forecastDay3.temp}&deg</div>
+            <div class="icon-label">
+              <img src="${day3Icon}" alt="${finalData.forecastDay3.icon}">
+              <span class="condition-label">${finalData.forecastDay3.conditions}</span>
+            </div>
+          </td>
+          <td>
+            <div class="temp-label">${finalData.forecastDay4.temp}&deg</div>
+            <div class="icon-label">
+              <img src="${day4Icon}" alt="${finalData.forecastDay4.icon}">
+              <span class="condition-label">${finalData.forecastDay4.conditions}</span>
+            </div>
+          </td>
+          <td>
+            <div class="temp-label">${finalData.forecastDay5.temp}&deg</div>
+            <div class="icon-label">
+              <img src="${day5Icon}" alt="${finalData.forecastDay5.icon}">
+              <span class="condition-label">${finalData.forecastDay5.conditions}</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="description-row">
+          <td>${finalData.forecastDay1.description}</td>
+          <td>${finalData.forecastDay2.description}</td>
+          <td>${finalData.forecastDay3.description}</td>
+          <td>${finalData.forecastDay4.description}</td>
+          <td>${finalData.forecastDay5.description}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 `;
   } catch {
     (error) => {
@@ -146,14 +163,16 @@ async function getIcon(iconName) {
 }
 
 // handle form submission
-const form = document.querySelector("#weather-form");
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  // get radio button selection
-  const checked = document.querySelector(
-    'input[name="unitType"]:checked',
-  ).value;
-  // get input field value
-  const input = document.querySelector("#search").value;
-  apiCall(input, checked);
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("#weather-form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // get radio button selection
+    const checked = document.querySelector(
+      'input[name="unitType"]:checked',
+    ).value;
+    // get input field value
+    const input = document.querySelector("#search").value;
+    apiCall(input, checked);
+  });
 });

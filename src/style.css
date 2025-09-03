@@ -1,3 +1,130 @@
 body {
   background-color: grey;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* layout for search and units */
+.units-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+.units-label {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.current {
+  text-align: center;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
+.current img {
+  width: 100px;
+  height: 100px;
+}
+
+/* current forecast section enhancements */
+.current p:first-child {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 18px;
+  margin-top: 0;
+}
+.current .icon-label {
+  margin: 18px 0 12px 0;
+}
+.current .icon-label p {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+.current .condition-label {
+  font-size: 1.1em;
+  color: #e0e0e0;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+.current p:last-child {
+  font-size: 1.15em;
+  margin-top: 18px;
+  margin-bottom: 0;
+}
+
+.forecast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* uniform column sizing for forecast table */
+.forecast table {
+  border-collapse: fixed;
+  width: 80%;
+  margin: 20px auto;
+  max-width: 900px;
+  min-width: 320px;
+}
+.forecast th,
+.forecast td {
+  padding: 10px;
+  text-align: center;
+  color: white;
+  width: 20%;
+  word-break: break-word;
+  vertical-align: top;
+}
+.forecast th {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.forecast td {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.forecast img {
+  width: 50px;
+  height: 50px;
+}
+.forecast p {
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 5px 0;
+}
+
+.icon-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.condition-label {
+  font-size: 0.95em;
+  color: #eee;
+  margin-top: 2px;
+}
+
+/* for future forecast: keep temp close to icon+label */
+.temp-label {
+  margin-top: 4px;
+  font-weight: bold;
+}
+
+/* prevent description from stretching cells too much */
+.description-row td {
+  font-size: 0.95em;
+  max-width: 140px;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
